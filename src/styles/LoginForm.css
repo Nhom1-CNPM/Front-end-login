@@ -1,0 +1,138 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial, sans-serif;
+}
+
+.nen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e90ff, #20b2aa); /* Gradient xanh dương - xanh lá */
+  position: relative;
+  overflow: hidden;
+}
+
+.khung-dang-nhap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100vh;
+}
+
+.form-dang-nhap {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 40px;
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  color: #fff;
+}
+
+.tieu-de {
+  font-size: 28px;
+  margin-bottom: 30px;
+}
+
+.truong-nhap {
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.nhan-truong {
+  display: block;
+  font-size: 14px;
+  margin-bottom: 5px;
+  color: #ccc;
+}
+
+.input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.o-nhap {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background: #fff;
+  color: #000;
+  font-size: 16px;
+  height: 40px; /* Đặt chiều cao cố định để căn giữa biểu tượng */
+}
+
+.o-nhap--co-icon {
+  padding-right: 40px; /* Chừa chỗ cho biểu tượng */
+}
+
+.o-nhap::placeholder {
+  color: #888;
+  line-height: normal; /* Đảm bảo placeholder không bị ảnh hưởng bởi line-height */
+}
+
+.icon-hien-mat-khau {
+  position: absolute;
+  right: 10px;
+  top: 50%; /* Căn giữa theo chiều dọc của ô nhập liệu */
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #000;
+  font-size: 16px;
+  display: flex;
+  align-items: center; /* Căn giữa biểu tượng theo chiều dọc */
+}
+
+.lien-ket-quen-mat-khau {
+  margin-top: 5px;
+  text-align: right;
+  font-size: 14px;
+}
+
+.lien-ket-quen-mat-khau span {
+  color: #00b7ff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lien-ket-quen-mat-khau span:hover {
+  text-decoration: underline;
+}
+
+.nut-xac-nhan {
+  width: 100%;
+  padding: 12px;
+  background: #00b7ff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.nut-xac-nhan:hover {
+  background: #0095d6;
+}
+
+.van-ban-dang-ky {
+  margin-top: 20px;
+  font-size: 14px;
+  color: #ccc;
+}
+
+.lien-ket-dang-ky {
+  color: #00b7ff;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.lien-ket-dang-ky:hover {
+  text-decoration: underline;
+}
