@@ -136,3 +136,17 @@
 .lien-ket-dang-ky:hover {
   text-decoration: underline;
 }
+
+.thong-bao {
+  margin-top: 10px;
+  font-size: 14px;
+  text-align: center;
+}
+
+.thong-bao.success {
+  color: rgb(0, 245, 0);
+}
+
+.thong-bao.error {
+  color: red;
+}
