@@ -1,16 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../AuthContext';
 import '../styles/LoginForm.css';
 
 const LoginForm = () => {
+    const { login } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [isSignUp, setIsSignUp] = useState(false);
     const [formData, setFormData] = useState({
         username: '',
+        email: '',
         password: '',
-        confirmPassword: '',
-        phone: ''
+        confirmPassword: ''       
     });
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+    const [message, setMessage] = useState(''); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -20,19 +26,48 @@ const LoginForm = () => {
         });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setMessage(''); 
+
         if (isSignUp) {
             if (formData.password !== formData.confirmPassword) {
-                alert('Mật khẩu và nhập lại mật khẩu không khớp!');
+                alert('Mật khẩu và nhập lại mật khẩu không khớp!'); 
                 return;
             }
-            console.log('Dữ liệu đăng ký:', formData);
+            // Gửi yêu cầu đăng ký đến API PHP
+            try {
+                const response = await axios.post('http://localhost/form-register-login/backend/register_handler.php', {
+                    username: formData.username,
+                    email: formData.email,
+                    password: formData.password
+                });
+                if (response.data.success) {
+                    alert('Đăng ký thành công! Vui lòng đăng nhập.');
+                    setIsSignUp(false); // Chuyển sang form đăng nhập
+                } else {
+                    alert(response.data.message || 'Đăng ký thất bại!');
+                }
+            } catch (error) {
+                alert('Đã xảy ra lỗi khi đăng ký!');
+            }
         } else {
-            console.log('Dữ liệu đăng nhập:', {
-                username: formData.username,
-                password: formData.password
-            });
+            // Gửi yêu cầu đăng nhập đến API PHP
+            try {
+                const response = await axios.post('http://localhost/form-register-login/backend/login_handler.php', {
+                    username: formData.username,
+                    password: formData.password
+                });
+                if (response.data.success) {
+                    alert('Đăng nhập thành công!');
+                    login({ username: formData.username }); 
+                    navigate('/dashboard'); // Chuyển hướng đến trang dashboard hoặc trang chủ index j đó
+                } else {
+                    alert(response.data.message || 'Đăng nhập thất bại!');
+                }
+            } catch (error) {
+                alert('Đã xảy ra lỗi khi đăng nhập!');
+            }
         }
     };
 
@@ -40,16 +75,17 @@ const LoginForm = () => {
         setIsSignUp(!isSignUp);
         setFormData({
             username: '',
+            email: '',
             password: '',
-            confirmPassword: '',
-            phone: ''
+            confirmPassword: ''
         });
         setShowPassword(false);
         setShowConfirmPassword(false);
+        setMessage(''); // Reset thông báo
     };
 
     const handleForgotPassword = () => {
-        alert('Chức năng quên mật khẩu đang được phát triển!');
+        navigate('/forgot-password');
     };
 
     return (
@@ -71,6 +107,23 @@ const LoginForm = () => {
                                 required
                             />
                         </div>
+                        {isSignUp && (
+                            <>
+                                <div className="truong-nhap">
+                                    <label htmlFor="email" className="nhan-truong">Nhập email</label>
+                                    <input
+                                        type="email"
+                                        id="email"
+                                        name="email"
+                                        className="o-nhap"
+                                        placeholder="Nhập email"
+                                        value={formData.email}
+                                        onChange={handleChange}
+                                        required
+                                    />
+                                </div>
+                            </>
+                        )}
                         <div className="truong-nhap">
                             <label htmlFor="password" className="nhan-truong">Mật khẩu</label>
                             <div className="input-wrapper">
@@ -97,6 +150,7 @@ const LoginForm = () => {
                                 </p>
                             )}
                         </div>
+                        
                         {isSignUp && (
                             <>
                                 <div className="truong-nhap">
@@ -119,19 +173,6 @@ const LoginForm = () => {
                                             <i className={showConfirmPassword ? 'fas fa-eye' : 'fas fa-eye-slash'}></i>
                                         </span>
                                     </div>
-                                </div>
-                                <div className="truong-nhap">
-                                    <label htmlFor="phone" className="nhan-truong">Nhập số điện thoại</label>
-                                    <input
-                                        type="tel"
-                                        id="phone"
-                                        name="phone"
-                                        className="o-nhap"
-                                        placeholder="Nhập số điện thoại"
-                                        value={formData.phone}
-                                        onChange={handleChange}
-                                        required
-                                    />
                                 </div>
                             </>
                         )}
